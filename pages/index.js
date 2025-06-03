@@ -21,7 +21,7 @@ export default function Home() {
       const data = await response.json();
       setPredictions(data.predictions);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error getting predictions:", error);
     }
     setIsLoading(false);
   };
@@ -74,60 +74,36 @@ export default function Home() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
-          <div className="mb-6">
-            <label
-              htmlFor="symptoms"
-              className="block text-lg font-medium text-gray-700 mb-2"
-            >
-              Patient Symptoms
-            </label>
-            <textarea
-              id="symptoms"
-              rows="4"
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-              placeholder="Enter symptoms separated by commas (e.g., headache, dizziness, fatigue)"
-              value={symptoms}
-              onChange={(e) => setSymptoms(e.target.value)}
-            />
-          </div>
+          <div className="space-y-6">
+            <div>
+              <label
+                htmlFor="symptoms"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Patient Symptoms
+              </label>
+              <textarea
+                id="symptoms"
+                rows="4"
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                placeholder="Enter symptoms separated by commas (e.g., headache, dizziness, fatigue)"
+                value={symptoms}
+                onChange={(e) => setSymptoms(e.target.value)}
+              />
+            </div>
 
-          <button
-            onClick={handlePrediction}
-            disabled={isLoading || !symptoms.trim()}
-            className={`w-full py-4 px-6 rounded-lg text-white font-medium text-lg transition-all transform hover:scale-[1.02] ${
-              isLoading || !symptoms.trim()
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            }`}
-          >
-            {isLoading ? (
-              <span className="flex items-center justify-center">
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Processing...
-              </span>
-            ) : (
-              "Run Prediction"
-            )}
-          </button>
+            <button
+              onClick={handlePrediction}
+              disabled={isLoading || !symptoms.trim()}
+              className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-all transform hover:scale-[1.02] ${
+                isLoading || !symptoms.trim()
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              }`}
+            >
+              {isLoading ? "Analyzing..." : "Run Prediction"}
+            </button>
+          </div>
         </div>
 
         {predictions && (
@@ -141,12 +117,12 @@ export default function Home() {
                   key={index}
                   className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-medium text-gray-800">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-gray-800">
                       {prediction.condition}
                     </span>
                     <span className="text-sm font-medium text-blue-600">
-                      {Math.round(prediction.probability * 100)}% confidence
+                      {(prediction.probability * 100).toFixed(1)}% confidence
                     </span>
                   </div>
                 </div>
