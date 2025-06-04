@@ -1,0 +1,50 @@
+You are a computational health researcher. You are proposing to develop a ML model that is able to accurately predict genetic neurological diseases based on phenotypes and patient presentation. Below you provide a full proposal with all the details you want of this project. Now, help me find 30 PubMed and other published literature sources that contain real patient cases, for which we can use to evaluate correctness for predicting genetic neurological conditions. Diversify the cases found across different neurological domains (ie. some cases in neuromuscular, some cases in epilepsy, cases across many different neurological diseases, etc.)  
+
+Full proposal provided below:
+Proposal Title: Bridging the Diagnostic Odyssey: Development of Machine Learning-Based Predictive Models for Genetic Neurological Disorder Diagnosis
+1. Problem Statement and Task Definition: 
+Real-World Problem: Neurological disorders have emerged as the leading cause of combined disability and mortality globally over the past three decades.1 A recent systematic analysis estimated that more than 3 billion people worldwide were living with a neurological condition in 2021.2 The World Health Organization (WHO) has made neurological disorders a significant priority in global health policy, which is reflected in the implementation of the Intersectoral Global Action Plan on Epilepsy and other Neurological Disorders 2022-31 (IGAP) and the initiation of the WHO Brain Health Initiative, both advocating for synergistic collaboration to mitigate the global neurological burden.3 According to the WHO, the top ten neurological conditions contributing to health loss in 2021 included stroke, neonatal encephalopathy, epilepsy, migraine, dementia, diabetic neuropathy, meningitis, neurological complications from preterm birth, autism spectrum disorder (ASD), and nervous system cancers.4 
+Many of these neurological diseases, such as ASD, epilepsy, and neonatal encephalopathy, are complex diseases known to have a strong genetic component. Keeping updated on the vast number of possible genetic neurological syndromes, many of which are rare disorders, presents a significant challenge for providers. The current Online Mendelian Inheritance in Man (OMIM) database, one of the largest reference databases of human genetic disorders, lists thousands of genetic syndromes that had manifestations of neurological symptoms. Furthermore, commonly used searching system professionals, such as Pubmed, are usually highly sophisticated and are      time-     consuming for searching through the contents. Therefore, the availability of an assistive tool to help predict potential genetic neurological diagnoses when such conditions are suspected would be highly valuable. Such a tool could facilitate earlier diagnosis and intervention, help avoid unnecessary diagnostic testing, and improve patient’s quality of life. 
+Task Definition: In the current proposal, we plan to develop a ML model to assist predicting the diagnosis of genetic neurological diseases based on the reference knowledge database OMIM, with input of a phrases of clinical symptoms, and output of a list of most likely genetic neurologist disorder diagnosis. 
+We will compare the performance of our specialized model against commonly available LLMs. We hypothesize that our model, trained on domain-specific database, will provide more accurate and reliable predictions for these complex conditions, and reduce “hallucinations”. Finally, we plan to develop a user-friendly web interface, offering clinicians a practical tool to aid the diagnostic process when a genetic neurological disorder is suspected.
+Proposed System and Task: To address this challenge, we propose the development of a machine learning-based assistive tool designed to accelerate the diagnostic process for suspected genetic neurological disorders.
+Input: The system will take a user-provided phrase or list of clinical symptoms (phenotypes) as input.
+Output: Leveraging the knowledge curated in the OMIM database, the system will output a list of the top 20 most likely genetic neurological disorder diagnoses corresponding to the input symptoms.
+Scope: The project focuses specifically on predicting potential genetic neurological disorders based on phenotypic information. The goal is not to provide a definitive diagnosis but to offer clinicians a prioritized list of possibilities to guide further investigation. We plan to develop a user-friendly web interface to make this tool practical and accessible for providers.
+2. Input/Output Behavior with concrete examples: The source for training the ML model will be synthetic data derived from the OMIM database, a comprehensive public available database of human genetic disorders. We will use the OMIM API to download relevant entries. These entries will be parsed to extract clinical phenotype descriptions, specifically focusing on genetic disorders presenting with neurological symptoms. To ensure consistency and facilitate computational analysis, extracted phenotypes may be standardized either using clustering technique with help of LLM, or using established ontologies like the Human Phenotype Ontology (HPO).  
+Validation Data: Model performance will be evaluated using a separate validation dataset. This dataset will comprise ~20-30 case reports of confirmed genetic neurological disorders from the PubMed literature database. For each case, we will manually extract the reported clinical symptoms (serving as test input) and the confirmed genetic diagnosis (serving as the ground truth).
+Interaction: A user will input the clinical phenotypes into a web interface that we plan to develop. The system's backend will process this input, query the trained machine learning model, and return a list of 20 potential genetic neurological disease diagnoses within the interface for review.
+Example: 
+Input: # a list of clinical symptoms
+“epilepsy”, “developmental delay”, “febrile seizure”, “status epilepticus” 
+Output: # a list of possible genetic neurological syndromes based on provided symptoms
+Dravet Syndrome
+Genetic Epilepsy with Febrile Seizures Plus (GEFS+)
+KCNQ2-Related Epilepsies
+SCN2A-Related Epilepsies
+SCN8A-Related Epileptic Encephalopathy
+STXBP1 Encephalopathy
+CDKL5 Deficiency Disorder
+PCDH19-Related Epilepsy
+Tuberous Sclerosis Complex (TSC)
+Glucose Transporter Type 1 Deficiency Syndrome (GLUT1-DS)
+Pyridoxine-Dependent Epilepsy
+Angelman Syndrome
+Rett Syndrome
+West Syndrome / Infantile Spasms
+Lennox-Gastaut Syndrome (LGS)
+Unverricht-Lundborg Disease
+Lafora Disease
+Myoclonic Epilepsy with Ragged-Red Fibers (MERRF)
+GRIN2A-Related Speech and Seizure Disorders
+DEPDC5-Related Familial Focal Epilepsy
+3. An evaluation metric. How will you measure the success of your system? Why does this metric work best for this problem? For this, you need to obtain a reasonably sized dataset of example input-output pairs, either from existing sources, or collecting one from scratch. A natural evaluation metric is accuracy, but it could be memory or running time.
+Evaluation Dataset: We will curate a validation dataset consisting of approximately 20 case reports confirmed genetic neurological disorders from PubMed. For each case, we will manually extract the key reported phenotypes (as system input) and the confirmed OMIM diagnosis (as the ground truth output). This dataset will be used to calculate for our developed models. The positive rate will be calculated for (1) our ML model (2) a baseline using Llama MML. (3) A baseline using the ChatGPT LLM. 
+Evaluation Metrics are: (1) Main evaluation measure: Top-20 Accuracy: to see whether the diagnosis is captured within the top 20 results generated by the system. The secondary evaluation measure is (2) Mean Reciprocal Rank (MRR): This secondary metric calculates the average reciprocal rank of the correct diagnosis. It provides insight into how highly the correct diagnosis is ranked within the list (higher ranks receive higher scores). 
+4. Related works. Search the Internet for similar projects and mention the related research and projects.
+These exact topics have not been done before. Similar ideas have been done in different disease and using different training database for the model: PMID: 38248021
+5. Baseline and Oracle. 
+Baseline and method: We will use currently commonly used LLM models (Gemini, ChatGPT, Claude) to test the accurate rate of the genetic diagnosis for the 20-30 case extracted from the PUBMED. 
+Oracle: This does not apply for our proposal design.
+6. Methodology 
+Our core approach involves developing a specialized machine learning model, using Natural Language Processing (NLP) techniques, to map clinical symptom descriptions to potential genetic neurological disorders listed in OMIM.  
